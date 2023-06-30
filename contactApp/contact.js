@@ -4,8 +4,10 @@ class Contact {
         this.contactInfos = []
     }
     static newContact(cName) {
-        //cName check
+        if(typeof cName != "string")
+         throw new Error("Enter type of String Only");
+         
         return new Contact(cName)
     }
 }
-module.exports = Contact
+module.exports = Contact 
