@@ -7,6 +7,7 @@ class User {
         this.name = name
         this.username = username
         this.isAdmin = isAdmin
+        this.isStaff = !isAdmin
         this.contacts = []
     }
 
@@ -21,7 +22,7 @@ class User {
     }
 
     static findUser(username) {
-         this.properStringFormat(username);
+        this.properStringFormat(username);
 
         for (let index = 0; index < User.allUser.length; index++) {
             if (User.allUser[index].username == username) {
@@ -33,7 +34,7 @@ class User {
    
 
     static newAdmin(name, username) {
-         
+       
         this.properStringFormat(name);
         this.properStringFormat(username);
 
@@ -46,11 +47,10 @@ class User {
         return admin
     }
     newUser(name, username) {
-          User.properStringFormat(name);
+        User.properStringFormat(name);
         User.properStringFormat(username);
         
 
-        //check
         if (!this.isAdmin) {
             throw new Error("Unauthorized")
         }
@@ -71,7 +71,6 @@ class User {
     }
 
     updateUser(username, parameter, newValue) {
-         
 
         User.properStringFormat(username);
         User.properStringFormat(newValue);
@@ -121,8 +120,11 @@ class User {
 
 
         User.allUser.splice(indexOfUserFound,1); 
-    } 
-     findContact(cName) {
+    }
+ 
+// Contacts
+ 
+    findContact(cName) {
         for (let index = 0; index < this.contacts.length; index++) {
             if (this.contacts[index].cName == cName) {
                 return [true, index]
@@ -132,10 +134,8 @@ class User {
 
     }
     newContact(cName) {
-        //check cname is string
         User.properStringFormat(cName);
 
-        //check not admin
         if (this.isAdmin){
             throw new Error("Admin Cannot Create Contacts")
         }
@@ -182,6 +182,9 @@ class User {
     }
     
  
+// Contacts Info
+ 
+
     getContactInfo(type , indexOfContact){
 
         let line = this.contacts[indexOfContact].contactInfos
@@ -259,7 +262,7 @@ class User {
 
         let [isContactTypeExist, indexOfContactType] = this.getContactInfo(type, indexOfContact )
         if (!isContactTypeExist) {
-            throw new Error("ContactType Doesn't Exist")
+            throw new Error("ContactType Doesnt Exist")
         }
 
         this.contacts[indexOfContact].contactInfos[indexOfContactType].value = value;
